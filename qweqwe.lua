@@ -1056,7 +1056,6 @@ do
     Depbox1:AddToggle('aimbot_fov_outline', {Text = 'fov outline',Default = false,Callback = function(Value)
         fov_outline = Value; update_fov()
     end})
-    Depbox1:AddLabel("fov line color")
     Depbox1:AddSlider('aimbot_fov_size',{Text = 'target fov',Default = 100,Min = 10,Max = 1000,Rounding = 0,Compact = true,Callback = function(State)
         fov_size = State; update_fov()
     end})
