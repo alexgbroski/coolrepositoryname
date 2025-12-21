@@ -162,6 +162,7 @@ repeat if not pcall(function()
     trident.middlepart = workspace.Const.Ignore.LocalCharacter.Middle
     trident.original_model = game:GetService("ReplicatedStorage").Shared.entities.Player.Model
     trident.tcp = LocalPlayer.TCP
+	trident.top = workspace.Const.Ignore.LocalCharacter.Top
     print("Loading")
 end) then task.wait(0.5) end until trident.middlepart and trident.original_model and trident.tcp
 
@@ -1157,6 +1158,11 @@ do
 end
 -- FC --
 do
+	local freecamoffset = Vector3.zero
+    local middle = workspace.Const.Ignore.LocalCharacter.Middle
+    local bottom = workspace.Const.Ignore.LocalCharacter.Bottom
+    local top = trident.top
+    local mdpos, bmpos, tppos = middle.CFrame, bottom.CFrame, top.CFrame
     local mvb = ui.box.move:AddTab('exploits')
     local enabled, speed = false, 55
     local fakecrouch_timer = tick()
@@ -1166,11 +1172,7 @@ do
     mvb:AddToggle('longneck', {Text = 'long neck',Default = false,Callback = function(first)
         top.Prism1.CFrame = first and originalprismcframe - Vector3.yAxis * 5 or originalprismcframe
     end}):AddKeyPicker('longneck_bind', {Default = 'None',SyncToggleState = true,Mode = 'Toggle',Text = 'long neck',NoUI = false})
-    local freecamoffset = Vector3.zero
-    local middle = workspace.Const.Ignore.LocalCharacter.Middle
-    local bottom = workspace.Const.Ignore.LocalCharacter.Bottom
-    local top = workspace.Const.Ignore.LocalCharacter.Top
-    local mdpos, bmpos, tppos = middle.CFrame, bottom.CFrame, top.CFrame
+   
     mvb:AddToggle('freecam_enabled', {Text = 'freecam enabled',Default = false,Callback = function(first)
         enabled = first
         middle.CanCollide = not first
