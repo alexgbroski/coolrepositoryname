@@ -31,10 +31,10 @@ if not LPH_OBFUSCATED then
     SWG_DiscordID = 67
     SWG_Private = true
     SWG_Dev = false
-    SWG_Version = "free"
+    SWG_Version = "full"
     SWG_Title = 'the clan of mafia'
-    SWG_ShortName = 'free'
-    SWG_FullName = 'ts'
+    SWG_ShortName = 'guns.lol/kirilldk20'
+    SWG_FullName = 'trident survival v5'
     SWG_FFA = false
 end;
 --- FABRICATED VALUES END!!!
