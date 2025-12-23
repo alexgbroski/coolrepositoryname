@@ -784,28 +784,60 @@ cheat.EspLibrary = {}; LPH_NO_VIRTUALIZE(function()
         end
     end
     local function identify_model(model)
+        
         if model.ClassName ~= "Model" then return false, false end
+        
+        if not model.PrimaryPart then return false, false end
+        
         if _FindFirstChildOfClass(model, "MeshPart") and _FindFirstChildOfClass(model, "MeshPart").MeshId == "rbxassetid://12939036056" then
+            
+            
             if #model:GetChildren() == 1 then
+                
                 return "Stone", model:GetChildren()[1]
             else
                 for _, part in model:GetChildren() do
-                    if part.Color == Color3.fromRGB(248, 248, 248) then
+                    if part.Color == Color3.fromRGB(199, 172, 120) then
+                        
                         return "Nitrate", part
-                    elseif part.Color == Color3.fromRGB(199, 172, 120) then
+                    elseif part.Color == Color3.fromRGB(72, 72, 72) then
+                        
                         return "Iron", part
                     end
                 end
             end
         end
-        if not model.PrimaryPart then return end
+        
         local primpart = model.PrimaryPart
         for name, entity in enttiyidentification do
             if entity.Color == primpart.Color and entity.Material == primpart.Material and entity.CollisionGroup == primpart.CollisionGroup then
+                
                 return name, primpart
             end
         end
         return false, false
+    end
+    local function identify_weapon(model)
+        if model then
+            local handle =  _FindFirstChild(model, "Handle") or model.PrimaryPart
+            if not _IsA(model,"Model") then return "unknown" end
+            if not model.PrimaryPart then return "unknown" end
+            local models = game:GetService("ReplicatedStorage").HandModels
+            if handle and model.PrimaryPart == handle then
+                for i, m in pairs(models:GetChildren()) do
+                    if m and _FindFirstChild(m,"Handle") and _IsA(m.Handle,"MeshPart") then
+                        if handle.Color == m.Handle.Color then
+                            return tostring(m.Name)
+                        end
+                    end
+                end
+            else
+                return "unknown"
+            end
+        else
+            return "unknown"
+        end
+        return "unknown"
     end
 
     local function deepcopy(original)	
@@ -1005,7 +1037,12 @@ cheat.EspLibrary = {}; LPH_NO_VIRTUALIZE(function()
                     local bottom = (corners.bottomLeft + corners.bottomRight) * 0.5
                     dist.Text = tostring(mathround(distance)) .. " studs"
                     dist.Position = bottom
-                    weapon.Text = "unknown"
+                    local weap = _FindFirstChild(character,"HandModel")
+                    if weap and identify_weapon(weap) then
+                        weapon.Text = identify_weapon(weap)
+                    else
+                        weapon.Text = "unknown"
+                    end
                     weapon.Position = bottom + (dist.Visible and Vector2.yAxis * dist.TextBounds.Y - _Vector2new(0, 2) or Vector2.zero)
                 end
 
