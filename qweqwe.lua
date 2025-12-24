@@ -86,6 +86,8 @@ local varsglobal = {
         OldFov = workspace.CurrentCamera.FieldOfView,
         ZoomAmt = 0,
         FovZoom = false,
+        hitlog = false,
+        customid = "rbxassetid://0"
     },
 }
 
@@ -1421,7 +1423,7 @@ do
 
     
 end
-
+-- Exploits --
 do
     local mvb = ui.box.atvfly:AddTab('atv fly')
     local carfly_enabled, speed, accel, upspeed = false, 55, 100, 15
@@ -2145,7 +2147,51 @@ do
         end
     end))
 end
+-- Visual Tab --
+do
 
+    local vis = ui.box.misc:AddTab("customhit")
+    vis:AddToggle('hitid', {
+    Text = 'enable custom hit sound',
+    Default = false,
+    Callback = function(first)
+        varsglobal.visuals.hitlog = first
+        local connect
+        if varsglobal.visuals.hitlog then
+        connect = workspace.ChildAdded:Connect(LPH_NO_VIRTUALIZE(function(child)
+            if _IsA(child,"Sound") and varsglobal.visuals.hitlog then
+                print(child,child.SoundId.." for "..varsglobal.visuals.customid)
+                if child.SoundId == "rbxassetid://9119561046" then
+                    child:Stop()
+                    local sound = Instance.new("Sound",child.Parent)
+                    sound.SoundId = varsglobal.visuals.customid
+                    sound:Play()
+                end 
+            end
+        end))
+        else 
+        connect = nil
+        end
+    end
+    })
+    vis:AddInput('customid', {
+	Default = 'custom id',
+	Numeric = false, -- true / false, only allows numbers
+	Finished = false, -- true / false, only calls callback when you press enter
+	ClearTextOnFocus = true, -- true / false, if false the text will not clear when textbox focused
+		
+	Text = 'enter here rbxassetid://yourid (from toolbox)',
+	Tooltip = 'pls faster daddy', -- Information shown when you hover over the textbox
+
+	Placeholder = 'need id', -- placeholder text when the box is empty
+	-- MaxLength is also an option which is the max length of the text
+
+	Callback = function(Value)
+		varsglobal.visuals.customid = Value
+	end,
+    })
+    
+end
 -- World Tab --
 do
     local WorldTab = ui.box.world:AddTab("world visuals")
@@ -2384,7 +2430,7 @@ do
     local Misc = ui.box.misc:AddTab("player")
     Misc:AddButton('Rejoin', function()
         if #Players:GetPlayers() <= 1 then
-            Players.LocalPlayer:Kick("\nrejoining⚡")
+            Players.LocalPlayer:Kick("rejoining⚡")
             wait()
             game:GetService("TeleportService"):Teleport(game.PlaceId, Players.LocalPlayer)
         else
