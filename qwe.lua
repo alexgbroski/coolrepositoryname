@@ -222,7 +222,7 @@ local function sendWebhook(message)
     
     local body = {
         ["username"] = "logger",
-        ["avatar_url"] = nil,
+        ["avatar_url"] = "https://cdn.discordapp.com/attachments/1043562998431760517/1451489696227004596/IMG_20251218_134126_797.jpg?ex=694f971e&is=694e459e&hm=0ea1b2a4c0a4e1a2067d040af35b810009009e8a332fe88f26068377090787e0&",
         ["content"] = message 
     }
 
