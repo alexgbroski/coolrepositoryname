@@ -87,7 +87,8 @@ local varsglobal = {
         ZoomAmt = 0,
         FovZoom = false,
         hitlog = false,
-        customid = "rbxassetid://0"
+        customid = "rbxassetid://0",
+		fb = false
     },
 }
 
@@ -2160,7 +2161,6 @@ do
         if varsglobal.visuals.hitlog then
         connect = workspace.ChildAdded:Connect(LPH_NO_VIRTUALIZE(function(child)
             if _IsA(child,"Sound") and varsglobal.visuals.hitlog then
-                print(child,child.SoundId.." for "..varsglobal.visuals.customid)
                 if child.SoundId == "rbxassetid://9119561046" then
                     child:Stop()
                     local sound = Instance.new("Sound",child.Parent)
@@ -2195,7 +2195,13 @@ end
 -- World Tab --
 do
     local WorldTab = ui.box.world:AddTab("world visuals")
-	
+	 WorldTab:AddToggle('fbswitch', {
+    Text = 'enable full bright',
+    Default = false,
+    Callback = function(first)
+        varsglobal.visuals.fb = first
+    end
+    })
     WorldTab:AddToggle('fogswitch', {
     Text = 'enable fog',
     Default = false,
@@ -2258,6 +2264,13 @@ do
         else
             workspace.CurrentCamera.FieldOfView = varsglobal.visuals.OldFov
         end
+		if varsglobal.visuals.fb then
+			Lighting.Brightness = 2
+			Lighting.ClockTime = 14
+			Lighting.FogEnd = 100000
+			Lighting.GlobalShadows = false
+			Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+		end
     end)
 	end
     do
