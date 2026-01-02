@@ -34,7 +34,7 @@ return (function(Library, groupbox, sayfunc, maxemojis, maxlen, isrealswimhub)
     },
     ["mode"] = 1,
 },
-["mafiahub"] = {
+["byhub"] = {
     ["words"] = {
         [1] = "\77\65\70\73\65\72\85\66\32\68\79\78\39\84\32\78\69\69\68\32\85\80\68\65\84\69",
         [2] = "\77\65\70\73\65\72\85\66\32\68\79\78\39\84\32\78\69\69\68\32\76\85\65\82\77\79\82",
@@ -145,7 +145,7 @@ return (function(Library, groupbox, sayfunc, maxemojis, maxlen, isrealswimhub)
         enabled = first
     end})
     groupbox:AddDropdown('newchatspam_type', {Values = {
-        "mafiahub", "cracking bad", "emojis", "random words",
+        "hub", "cracking bad", "emojis", "random words",
         "LE LE LE MAMY EBAL", "hvh nns", "swearing"
     },Default = 1,Multi = false,Text = 'chat spam type',Callback = function(Value)
         spamtype = Value
@@ -192,6 +192,7 @@ return (function(Library, groupbox, sayfunc, maxemojis, maxlen, isrealswimhub)
         end end
     end)
 end)(...)
+
 
 
 
