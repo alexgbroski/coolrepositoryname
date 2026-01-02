@@ -363,11 +363,11 @@ local function getfile(name)
     if success then return content else return print("getfile returned error \""..content.."\"") end
 end
 local function isswimhubfile(file)
-    return isfile(..hub.."/new/files/"..file)
+    return isfile(hub.."/new/files/"..file)
 end
 local function readswimhubfile(file)
     if not isswimhubfile(file) then return false end
-    local success, returns = pcall(readfile, ..hub.."/new/files/"..file)
+    local success, returns = pcall(readfile, hub.."/new/files/"..file)
     if success then return returns else return print(returns) end
 end
 local function loadswimhubfile(file)
