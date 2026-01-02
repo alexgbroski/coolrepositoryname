@@ -27,15 +27,16 @@ if not LPH_OBFUSCATED then
 	LPH_CRASH = function()
 		return print(debug.traceback());
 	end;
-    SWG_DiscordUser = "noname"
-    SWG_DiscordID = 67
+    
+    SWG_ShortName = 'noname'
+    SWG_FullName = 'trident survival v5'
+    SWG_FFA = false
+	SWG_DiscordUser = "noname"
+    SWG_DiscordID = 1488
     SWG_Private = true
     SWG_Dev = false
     SWG_Version = "full"
     SWG_Title = 'noname'
-    SWG_ShortName = 'noname'
-    SWG_FullName = 'trident survival v5'
-    SWG_FFA = false
 end;
 --- FABRICATED VALUES END!!!
 
@@ -47,10 +48,6 @@ local trident = {
     original_model = nil,
 	top = nil
 }
-
-
-
---- Values ---
 local workspace = cloneref(game:GetService("Workspace"))
 local Players = cloneref(game:GetService("Players"))
 local ContextActionService = cloneref(game:GetService("ContextActionService"))
@@ -93,7 +90,7 @@ local varsglobal = {
     },
 }
 
--- Free Cam --
+--fc--
     fcRunning = false
     local Camera = workspace.CurrentCamera
     workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(function()
@@ -102,12 +99,9 @@ local varsglobal = {
 		Camera = newCamera
 	end
     end)
-
     local INPUT_PRIORITY = Enum.ContextActionPriority.High.Value
-
     Spring = {} do
 	Spring.__index = Spring
-
 	function Spring.new(freq, pos)
 		local self = setmetatable({}, Spring)
 		self.f = freq
@@ -115,7 +109,6 @@ local varsglobal = {
 		self.v = pos*0
 		return self
 	end
-
 	function Spring:Update(dt, goal)
 		local f = self.f*2*math.pi
 		local p0 = self.p
