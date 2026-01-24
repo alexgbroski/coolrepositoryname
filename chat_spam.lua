@@ -137,7 +137,7 @@ return (function(Library, groupbox, sayfunc, maxemojis, maxlen, isrealswimhub)
         [45] = "\108\101\32\108\101\32\108\101\32\105\113\63",
         [46] = "\108\101\32\108\101\32\108\101\32\98\114\97\105\110\63",
     },
-    ["mode"] = 2,
+    ["mode"] = 1,
 },
     
         }
@@ -194,6 +194,7 @@ return (function(Library, groupbox, sayfunc, maxemojis, maxlen, isrealswimhub)
         end end
     end)
 end)(...)
+
 
 
 
