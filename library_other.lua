@@ -3397,9 +3397,7 @@ if typeof(Config.Size) ~= 'UDim2' then
         ZIndex = 2;
         Parent = MainSectionInner;
     });
-	getgenv().ChangeBackground  = function (id)
-		TabContainer.Image = "rbxassetid://"..id
-	end
+
 	
 	local InnerVideoBackground = Library:Create('VideoFrame', {
 		BackgroundColor3 = Library.MainColor;
