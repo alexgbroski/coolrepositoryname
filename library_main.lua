@@ -3053,9 +3053,9 @@ function Library:CreateWindow(...)
         ZIndex = 2;
         Parent = MainSectionInner;
     });
-    local function ChangeBackground(id)
-        TabContainer.Image = "rbxassetid://"..id
-    end
+    getgenv().ChangeBackground  = function (id)
+		TabContainer.Image = "rbxassetid://"..id
+	end
     Library:AddToRegistry(TabContainer, {
         BackgroundColor3 = 'MainColor';
         BorderColor3 = 'OutlineColor';
@@ -3649,6 +3649,7 @@ for i,v in pairs(({"Internal","HttpCache","Instances","Signals","Script","Physic
     memorystats.restore(v)
 end
 return Library, Toggles, Options -- stupid fix for getgenv() not working...
+
 
 
 
