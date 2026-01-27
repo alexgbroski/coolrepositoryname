@@ -497,9 +497,10 @@ cheat.utility = {} do
         end
         for _, drawing in pairs(cheat.drawings) do
             if drawing then
-			drewing:Remove()
+			drawing:Remove()
             drawing = nil
             end
+			cheat.drawings[_]:Remove()
             cheat.drawings[_] = nil
         end
         for hooked, original in pairs(cheat.hooks) do
