@@ -753,8 +753,12 @@ function LogAnimation(Id, Data)
 end
 
 task.spawn(function()
+	local LoggedTracks = {} -- Кэш уже залогированных треков
+	local TrackCache = {} -- Кэш для отслеживания изменений
+	
 	while not Closed do
-		task.wait(0.5)
+		task.wait(1.5) -- Увеличил интервал до 1.5 секунд
+		
 		local plr = game.Players.LocalPlayer
 		if not plr then break end
 		
@@ -784,26 +788,76 @@ task.spawn(function()
 		end
 		
 		for track, source in pairs(tracks) do
-			task.wait(0.5)
 			if not Closed and AnimationLogger then
-				local success, err = pcall(function()
-					LogAnimation(track.Animation.Name, {
-						Source = source,
-						Path = track.Animation:GetFullName(),
-						Id = track.Animation.AnimationId,
-						AnimationName = track.Name,
-						IsPlaying = track.IsPlaying,
-						Length = track.Length,
-						Speed = track.Speed,
-						Looped = track.Looped,
-						Priority = track.Priority,
-						TimePosition = track.TimePosition,
-						WeightCurrent = track.WeightCurrent,
-						WeightTarget = track.WeightTarget
-					})
-				end)
-				if not success then
-					warn("Failed to log animation:", err)
+				local trackKey = tostring(track) .. "_" .. source
+				local animData = {
+					Source = source,
+					Path = track.Animation:GetFullName(),
+					Id = track.Animation.AnimationId,
+					AnimationName = track.Name,
+					IsPlaying = track.IsPlaying,
+					Length = track.Length,
+					Speed = track.Speed,
+					Looped = track.Looped,
+					Priority = track.Priority,
+					TimePosition = track.TimePosition,
+					WeightCurrent = track.WeightCurrent,
+					WeightTarget = track.WeightTarget
+				}
+				
+				-- Проверяем изменились ли данные
+				local cacheData = TrackCache[trackKey]
+				local changed = false
+				
+				if not cacheData then
+					changed = true
+				else
+					for k, v in pairs(animData) do
+						if cacheData[k] ~= v then
+							changed = true
+							break
+						end
+					end
+				end
+				
+				-- Логируем только если трек новый или изменился
+				if changed then
+					TrackCache[trackKey] = animData
+					
+					local success, err = pcall(function()
+						LogAnimation(track.Animation.Name, animData)
+					end)
+					if not success then
+						warn("Failed to log animation:", err)
+					end
+				end
+			end
+		end
+		
+		-- Чистим кэш от треков, которых больше нет
+		local currentTracks = {}
+		for track, _ in pairs(tracks) do
+			currentTracks[tostring(track) .. "_" .. tracks[track]] = true
+		end
+		
+		for key, _ in pairs(TrackCache) do
+			if not currentTracks[key] then
+				TrackCache[key] = nil
+			end
+		end
+		
+		-- Ограничиваем количество логов в памяти (максимум 1000 записей на анимацию)
+		for id, log in pairs(AnimationLogs) do
+			if #log.Data > 100 then
+				-- Удаляем старые записи (первые 500)
+				for i = 1, 50 do
+					table.remove(log.Data, 1)
+				end
+				if log.Item then
+					log.Item.Update(#log.Data)
+				end
+				if SelectedLog == id then
+					SelectLog(id)
 				end
 			end
 		end
