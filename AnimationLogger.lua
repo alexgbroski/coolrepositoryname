@@ -712,7 +712,6 @@ task.spawn(function()
 		local hum = char:FindFirstChild("Humanoid")
 		if not hum then continue end
 		local animator = hum:FindFirstChild("Animator")
-		if not obj then continue end
 		for _, track in pairs(hum:GetPlayingAnimationTracks() or {}) do
 			task.wait(0.5)
 			if not Closed and AnimationLogger then
