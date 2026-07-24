@@ -806,7 +806,6 @@ task.spawn(function()
 					WeightTarget = track.WeightTarget
 				}
 				
-				-- Проверяем изменились ли данные
 				local cacheData = TrackCache[trackKey]
 				local changed = false
 				
@@ -821,7 +820,6 @@ task.spawn(function()
 					end
 				end
 				
-				-- Логируем только если трек новый или изменился
 				if changed then
 					TrackCache[trackKey] = animData
 					
@@ -835,7 +833,6 @@ task.spawn(function()
 			end
 		end
 		
-		-- Чистим кэш от треков, которых больше нет
 		local currentTracks = {}
 		for track, _ in pairs(tracks) do
 			currentTracks[tostring(track) .. "_" .. tracks[track]] = true
@@ -847,10 +844,8 @@ task.spawn(function()
 			end
 		end
 		
-		-- Ограничиваем количество логов в памяти (максимум 1000 записей на анимацию)
 		for id, log in pairs(AnimationLogs) do
 			if #log.Data > 100 then
-				-- Удаляем старые записи (первые 500)
 				for i = 1, 50 do
 					table.remove(log.Data, 1)
 				end
