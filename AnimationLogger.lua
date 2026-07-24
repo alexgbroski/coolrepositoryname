@@ -795,7 +795,7 @@ task.spawn(function()
 					Path = track.Animation:GetFullName(),
 					Id = track.Animation.AnimationId,
 					AnimationName = track.Name,
-					LoadedAnimationName = track.Animation.Name,
+					AnimationLoadedName = track.Animation.Name,
 					IsPlaying = track.IsPlaying,
 					Length = track.Length,
 					Speed = track.Speed,
