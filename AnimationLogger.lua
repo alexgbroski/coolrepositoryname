@@ -39,7 +39,7 @@ local EmptyState = Instance.new("Frame")
 local EmptyLabel = Instance.new("TextLabel")
 
 AnimationLogger.Name = "AnimationLogger"
-AnimationLogger.Parent = gethui()
+AnimationLogger.Parent = game:GetService("CoreGui")
 AnimationLogger.ResetOnSpawn = false
 
 MainFrame.Parent = AnimationLogger
