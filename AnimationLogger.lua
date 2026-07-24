@@ -757,7 +757,7 @@ task.spawn(function()
 	local TrackCache = {} -- Кэш для отслеживания изменений
 	
 	while not Closed do
-		task.wait(1.5) -- Увеличил интервал до 1.5 секунд
+		task.wait(0.75) -- Увеличил интервал до 1.5 секунд
 		
 		local plr = game.Players.LocalPlayer
 		if not plr then break end
