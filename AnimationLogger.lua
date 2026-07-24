@@ -704,7 +704,7 @@ end
 
 task.spawn(function()
 	while not Closed do
-		task.wait(0.5)
+		task.wait(0)
 		local plr = game.Players.LocalPlayer
 		if not plr then break end
 		local char = plr.Character
@@ -715,7 +715,7 @@ task.spawn(function()
 		local obj = animator or hum
 		if not obj then continue end
 		for _, track in pairs(obj:GetPlayingAnimationTracks() or {}) do
-			task.wait()
+			task.wait(1)
 			if not Closed and AnimationLogger then
 				LogAnimation(track.Animation.Name, {
                     Path = track.Animation:GetFullName(),
