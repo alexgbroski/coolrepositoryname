@@ -712,9 +712,26 @@ task.spawn(function()
 		local hum = char:FindFirstChild("Humanoid")
 		if not hum then continue end
 		local animator = hum:FindFirstChild("Animator")
-		local obj = animator or hum
 		if not obj then continue end
-		for _, track in pairs(obj:GetPlayingAnimationTracks() or {}) do
+		for _, track in pairs(hum:GetPlayingAnimationTracks() or {}) do
+			task.wait(0.5)
+			if not Closed and AnimationLogger then
+				LogAnimation(track.Animation.Name, {
+                    Path = track.Animation:GetFullName(),
+					Id = track.Animation.AnimationId,
+                    AnimationName = track.Name,
+                    IsPlaying =  track.IsPlaying,
+					Length = track.Length,
+					Speed = track.Speed,
+                    Looped  = track.Looped,
+                    Priority = track.Priority,
+                    TimePosition  = track.TimePosition,
+                    WeightCurrent  =  track.WeightCurrent,
+                    WeightTarget = track.WeightTarget
+				})
+			end
+		end
+			for _, track in pairs(animator:GetPlayingAnimationTracks() or {}) do
 			task.wait(0.5)
 			if not Closed and AnimationLogger then
 				LogAnimation(track.Animation.Name, {
