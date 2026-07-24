@@ -576,6 +576,7 @@ function CreateLogEntry(Data, Index)
 		end
 	end)
 
+	-- Параметры теперь в вертикальном списке
 	local ParamsRow = Instance.new("Frame")
 	ParamsRow.Parent = ContentArea
 	ParamsRow.Size = UDim2.new(1, 0, 0, 0)
@@ -584,10 +585,9 @@ function CreateLogEntry(Data, Index)
 
 	local PLayout = Instance.new("UIListLayout")
 	PLayout.Parent = ParamsRow
-	PLayout.Padding = UDim.new(0, 5)
-	PLayout.FillDirection = Enum.FillDirection.Horizontal
+	PLayout.Padding = UDim.new(0, 4)
+	PLayout.FillDirection = Enum.FillDirection.Vertical  -- Меняем на Vertical
 	PLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
-	PLayout.VerticalAlignment = Enum.VerticalAlignment.Top
 
 	local Pairs = {}
 	for k, v in pairs(Data) do
@@ -596,11 +596,14 @@ function CreateLogEntry(Data, Index)
 		end
 	end
 
+	-- Сортируем для красивого порядка
+	table.sort(Pairs, function(a, b) return a.Key < b.Key end)
+
 	for _, pair in pairs(Pairs) do
 		local Item = Instance.new("Frame")
 		Item.Parent = ParamsRow
-		Item.Size = UDim2.new(0, 0, 0, 0)
-		Item.AutomaticSize = Enum.AutomaticSize.XY
+		Item.Size = UDim2.new(1, 0, 0, 0)
+		Item.AutomaticSize = Enum.AutomaticSize.Y
 		Item.BackgroundColor3 = Colors.Bg
 		Item.BackgroundTransparency = 0.4
 		Item.ClipsDescendants = true
@@ -616,24 +619,25 @@ function CreateLogEntry(Data, Index)
 
 		local IPad = Instance.new("UIPadding")
 		IPad.Parent = Item
-		IPad.PaddingLeft = UDim.new(0, 8)
-		IPad.PaddingRight = UDim.new(0, 8)
-		IPad.PaddingTop = UDim.new(0, 5)
-		IPad.PaddingBottom = UDim.new(0, 5)
+		IPad.PaddingLeft = UDim.new(0, 10)
+		IPad.PaddingRight = UDim.new(0, 10)
+		IPad.PaddingTop = UDim.new(0, 4)
+		IPad.PaddingBottom = UDim.new(0, 4)
 
 		local ILayout = Instance.new("UIListLayout")
 		ILayout.Parent = Item
-		ILayout.FillDirection = Enum.FillDirection.Vertical
+		ILayout.FillDirection = Enum.FillDirection.Horizontal
 		ILayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
-		ILayout.Padding = UDim.new(0, 2)
+		ILayout.VerticalAlignment = Enum.VerticalAlignment.Center
+		ILayout.Padding = UDim.new(0, 8)
 
 		local KeyLabel = Instance.new("TextLabel")
 		KeyLabel.Parent = Item
 		KeyLabel.Size = UDim2.new(0, 0, 0, 0)
 		KeyLabel.AutomaticSize = Enum.AutomaticSize.XY
-		KeyLabel.Text = tostring(pair.Key)
+		KeyLabel.Text = tostring(pair.Key) .. ":"
 		KeyLabel.TextColor3 = Colors.TextDark
-		KeyLabel.TextSize = 9
+		KeyLabel.TextSize = 11
 		KeyLabel.TextXAlignment = Enum.TextXAlignment.Left
 		KeyLabel.Font = Enum.Font.GothamMedium
 		KeyLabel.BackgroundTransparency = 1
@@ -714,9 +718,17 @@ task.spawn(function()
 			task.wait()
 			if not Closed and AnimationLogger then
 				LogAnimation(track.Animation.Name, {
+                    Path = track.Animation:GetFullName(),
 					Id = track.Animation.AnimationId,
+                    AnimationName = track.Name,
+                    IsPlaying =  track.IsPlaying,
 					Length = track.Length,
-					Speed = track.Speed
+					Speed = track.Speed,
+                    Looped  = track.Looped,
+                    Priority = track.Priority,
+                    TimePosition  = track.TimePosition,
+                    WeightCurrent  =  track.WeightCurrent,
+                    WeightTarget = track.WeightTarget
 				})
 			end
 		end
