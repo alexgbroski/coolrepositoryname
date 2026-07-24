@@ -39,7 +39,7 @@ local EmptyState = Instance.new("Frame")
 local EmptyLabel = Instance.new("TextLabel")
 
 AnimationLogger.Name = "AnimationLogger"
-AnimationLogger.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+AnimationLogger.Parent = gethui()
 AnimationLogger.ResetOnSpawn = false
 
 MainFrame.Parent = AnimationLogger
