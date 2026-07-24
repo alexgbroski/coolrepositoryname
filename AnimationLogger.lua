@@ -398,7 +398,6 @@ function CreateListItem(Id, Log)
 		SelectLog(Id)
 	end)
 
-	-- Добавляем правую кнопку для копирования
 	local CopyButton = Instance.new("TextButton")
 	CopyButton.Parent = Btn
 	CopyButton.AnchorPoint = Vector2.new(1, 0.5)
@@ -437,7 +436,6 @@ function CreateListItem(Id, Log)
 			end
 			local success, err = pcall(setclipboard, CopyText)
 			if success then
-				-- Показываем уведомление (можно через Toast или другой способ)
 				local oldText = CopyButton.Text
 				CopyButton.Text = "✓"
 				task.wait(0.5)
@@ -534,7 +532,6 @@ function CreateLogEntry(Data, Index)
 	Time.Font = Enum.Font.GothamMedium
 	Time.BackgroundTransparency = 1
 
-	-- Кнопка копирования для отдельного лога
 	local CopyLogButton = Instance.new("TextButton")
 	CopyLogButton.Parent = TopRow
 	CopyLogButton.AnchorPoint = Vector2.new(1, 0.5)
@@ -561,9 +558,9 @@ function CreateLogEntry(Data, Index)
 	end)
 
 	CopyLogButton.MouseButton1Click:Connect(function()
-		local CopyText = string.format("Animation #%d\nTime: %s\n", Index, os.date("%H:%M:%S", Data.Time or os.time()))
+		local CopyText = string.format("Animation #%d\nTime: %s\nSource: %s\n", Index, os.date("%H:%M:%S", Data.Time or os.time()), Data.Source or "Unknown")
 		for k, v in pairs(Data) do
-			if k ~= "Time" then
+			if k ~= "Time" and k ~= "Source" then
 				CopyText = CopyText .. string.format("  %s: %s\n", k, tostring(v))
 			end
 		end
@@ -576,7 +573,6 @@ function CreateLogEntry(Data, Index)
 		end
 	end)
 
-	-- Параметры теперь в вертикальном списке
 	local ParamsRow = Instance.new("Frame")
 	ParamsRow.Parent = ContentArea
 	ParamsRow.Size = UDim2.new(1, 0, 0, 0)
@@ -586,17 +582,16 @@ function CreateLogEntry(Data, Index)
 	local PLayout = Instance.new("UIListLayout")
 	PLayout.Parent = ParamsRow
 	PLayout.Padding = UDim.new(0, 4)
-	PLayout.FillDirection = Enum.FillDirection.Vertical  -- Меняем на Vertical
+	PLayout.FillDirection = Enum.FillDirection.Vertical
 	PLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 
 	local Pairs = {}
 	for k, v in pairs(Data) do
-		if k ~= "Time" then
+		if k ~= "Time" and k ~= "Source" then
 			table.insert(Pairs, {Key = k, Value = v})
 		end
 	end
 
-	-- Сортируем для красивого порядка
 	table.sort(Pairs, function(a, b) return a.Key < b.Key end)
 
 	for _, pair in pairs(Pairs) do
@@ -654,6 +649,61 @@ function CreateLogEntry(Data, Index)
 		ValueLabel.BackgroundTransparency = 1
 	end
 
+	-- Добавляем Source как отдельный блок сверху
+	local SourceItem = Instance.new("Frame")
+	SourceItem.Parent = ParamsRow
+	SourceItem.Size = UDim2.new(1, 0, 0, 0)
+	SourceItem.AutomaticSize = Enum.AutomaticSize.Y
+	SourceItem.BackgroundColor3 = Colors.Bg
+	SourceItem.BackgroundTransparency = 0.4
+	SourceItem.ClipsDescendants = true
+	SourceItem.LayoutOrder = -1
+
+	local SourceCorner = Instance.new("UICorner")
+	SourceCorner.CornerRadius = UDim.new(0, 6)
+	SourceCorner.Parent = SourceItem
+
+	local SourceStroke = Instance.new("UIStroke")
+	SourceStroke.Color = Colors.Accent
+	SourceStroke.Thickness = 1
+	SourceStroke.Parent = SourceItem
+
+	local SourcePad = Instance.new("UIPadding")
+	SourcePad.Parent = SourceItem
+	SourcePad.PaddingLeft = UDim.new(0, 10)
+	SourcePad.PaddingRight = UDim.new(0, 10)
+	SourcePad.PaddingTop = UDim.new(0, 4)
+	SourcePad.PaddingBottom = UDim.new(0, 4)
+
+	local SourceLayout = Instance.new("UIListLayout")
+	SourceLayout.Parent = SourceItem
+	SourceLayout.FillDirection = Enum.FillDirection.Horizontal
+	SourceLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+	SourceLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+	SourceLayout.Padding = UDim.new(0, 8)
+
+	local SourceKey = Instance.new("TextLabel")
+	SourceKey.Parent = SourceItem
+	SourceKey.Size = UDim2.new(0, 0, 0, 0)
+	SourceKey.AutomaticSize = Enum.AutomaticSize.XY
+	SourceKey.Text = "Source:"
+	SourceKey.TextColor3 = Colors.Accent
+	SourceKey.TextSize = 11
+	SourceKey.TextXAlignment = Enum.TextXAlignment.Left
+	SourceKey.Font = Enum.Font.GothamBold
+	SourceKey.BackgroundTransparency = 1
+
+	local SourceValue = Instance.new("TextLabel")
+	SourceValue.Parent = SourceItem
+	SourceValue.Size = UDim2.new(0, 0, 0, 0)
+	SourceValue.AutomaticSize = Enum.AutomaticSize.XY
+	SourceValue.Text = Data.Source or "Unknown"
+	SourceValue.TextColor3 = Colors.Text
+	SourceValue.TextSize = 12
+	SourceValue.TextXAlignment = Enum.TextXAlignment.Left
+	SourceValue.Font = Enum.Font.GothamMedium
+	SourceValue.BackgroundTransparency = 1
+
 	task.defer(UpdateCanvas)
 	return FrameLog
 end
@@ -707,45 +757,54 @@ task.spawn(function()
 		task.wait(0.5)
 		local plr = game.Players.LocalPlayer
 		if not plr then break end
+		
 		local char = plr.Character
-		if not char then char = plr.CharacterAdded:Wait() end
+		if not char then 
+			char = plr.CharacterAdded:Wait() 
+		end
+		
 		local hum = char:FindFirstChild("Humanoid")
 		if not hum then continue end
+		
 		local animator = hum:FindFirstChild("Animator")
-		for _, track in pairs(hum:GetPlayingAnimationTracks() or {}) do
-			task.wait(0.5)
-			if not Closed and AnimationLogger then
-				LogAnimation(track.Animation.Name, {
-                    Path = track.Animation:GetFullName(),
-					Id = track.Animation.AnimationId,
-                    AnimationName = track.Name,
-                    IsPlaying =  track.IsPlaying,
-					Length = track.Length,
-					Speed = track.Speed,
-                    Looped  = track.Looped,
-                    Priority = track.Priority,
-                    TimePosition  = track.TimePosition,
-                    WeightCurrent  =  track.WeightCurrent,
-                    WeightTarget = track.WeightTarget
-				})
+		local tracks = {}
+		
+		if hum then
+			local humanoidTracks = hum:GetPlayingAnimationTracks()
+			for _, track in pairs(humanoidTracks or {}) do
+				tracks[track] = "Humanoid"
 			end
 		end
-			for _, track in pairs(animator:GetPlayingAnimationTracks() or {}) do
+		
+		if animator then
+			local animatorTracks = animator:GetPlayingAnimationTracks()
+			for _, track in pairs(animatorTracks or {}) do
+				tracks[track] = "Animator"
+			end
+		end
+		
+		for track, source in pairs(tracks) do
 			task.wait(0.5)
 			if not Closed and AnimationLogger then
-				LogAnimation(track.Animation.Name, {
-                    Path = track.Animation:GetFullName(),
-					Id = track.Animation.AnimationId,
-                    AnimationName = track.Name,
-                    IsPlaying =  track.IsPlaying,
-					Length = track.Length,
-					Speed = track.Speed,
-                    Looped  = track.Looped,
-                    Priority = track.Priority,
-                    TimePosition  = track.TimePosition,
-                    WeightCurrent  =  track.WeightCurrent,
-                    WeightTarget = track.WeightTarget
-				})
+				local success, err = pcall(function()
+					LogAnimation(track.Animation.Name, {
+						Source = source,
+						Path = track.Animation:GetFullName(),
+						Id = track.Animation.AnimationId,
+						AnimationName = track.Name,
+						IsPlaying = track.IsPlaying,
+						Length = track.Length,
+						Speed = track.Speed,
+						Looped = track.Looped,
+						Priority = track.Priority,
+						TimePosition = track.TimePosition,
+						WeightCurrent = track.WeightCurrent,
+						WeightTarget = track.WeightTarget
+					})
+				end)
+				if not success then
+					warn("Failed to log animation:", err)
+				end
 			end
 		end
 	end
