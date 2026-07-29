@@ -5,7 +5,7 @@ local TextChatService = game:GetService("TextChatService")
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "BubbleGUI"
-screenGui.Parent = LocalPlayer.PlayerGui
+screenGui.Parent = gethui()
 
 local mainFrame = Instance.new("Frame")
 mainFrame.Size = UDim2.new(0, 320, 0, 400)
