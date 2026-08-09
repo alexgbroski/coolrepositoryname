@@ -36,7 +36,20 @@ if game.PlaceId ==  45146873 then
 	        end
 	    end
 	end
-	if not gui then return end
+	if not gui then local gui = game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Games")
+
+	if gui then
+	    gui = gui:FindFirstChild("Games")
+	    if gui then
+	        gui = gui:FindFirstChild("Buttons")
+	        if gui then
+	            gui = gui:FindFirstChild("Games")
+	            if gui then
+	                gui = gui:FindFirstChild("1v1")
+	            end
+	        end
+	    end
+	end end
     local F  =  gui[1]
     local S = gui[2]
     local plr = game.Players.LocalPlayer
