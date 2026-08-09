@@ -1,5 +1,5 @@
 local lose = {"BedniyPapa"}
-local win = {"kirilldk20"}
+local win = {"CandyEyePlayer"}
 if game.PlaceId ==  45146873 then    
     repeat
     wait(1)
