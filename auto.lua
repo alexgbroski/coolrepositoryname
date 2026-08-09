@@ -96,11 +96,11 @@ elseif game.PlaceId  == 46955756 then--49707852 then
     local plr = game.Players.LocalPlayer
 
     if table.find(win,plr.Name) then
-       while wait(10) do
-	    	if game.Workspace.BuyZombie then
-            	game.Workspace.BuyZombie:InvokeServer("Speedy")
-	   	 		print("Summonned")
-	    	end
+       while wait(0.1) do
+			local Event = workspace.Make
+			Event:InvokeServer(
+			    "Speedy"
+			)
         end
     elseif table.find(lose,plr.Name) then
     end
