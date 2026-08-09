@@ -25,7 +25,7 @@ if game.PlaceId ==  45146873 then
     	repeat
 	game.Workspace.Loser:InvokeServer()
 	game.Workspace.Winner:InvokeServer()
-    		wait(0.1)
+    		wait(1)
             if F and S then
                 if (F.Text == "" and S.Text ==  "") or (table.find(lose,F.Text) or table.find(lose,S.Text)) then
                     join(2)
@@ -39,7 +39,7 @@ if game.PlaceId ==  45146873 then
     	repeat
 	game.Workspace.Loser:InvokeServer()
 	game.Workspace.Winner:InvokeServer()
-    		wait(0.1)
+    		wait(1)
             if F and S then
                 if (F.Text == "" and S.Text ==  "") or (table.find(win,F.Text) or table.find(win,S.Text)) then
                     join(2)
