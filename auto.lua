@@ -3,7 +3,7 @@ local win = {"CandyEyePlayer"}
 if game.PlaceId ==  45146873 then    
     repeat
     wait(1)
-    until game:IsLoaded()
+    until game:IsLoaded() and game.Players:FindFirstChild(win[1])
 	print("Loaded")
 
     local join =  function(i)
