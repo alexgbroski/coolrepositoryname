@@ -8,7 +8,7 @@ if game.PlaceId ==  45146873 then
     return false
 	end
     repeat
-    wait(1)
+    wait(5)
     until game:IsLoaded() and found(win) and found(lose)
 	print("Loaded")
 
@@ -22,7 +22,7 @@ if game.PlaceId ==  45146873 then
     end
 
     
-    local gui = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Games"):WaitForChild("Games"):WaitForChild("Buttons"):WaitForChild("Games"):WaitForChild("1v1")
+    local gui = game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Games"):FindFirstChild("Games"):FindFirstChild("Buttons"):FindFirstChild("Games"):FindFirstChild("1v1")
 	if not gui then return end
     local F  =  gui[1]
     local S = gui[2]
