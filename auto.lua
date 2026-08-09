@@ -1,9 +1,15 @@
 local lose = {"BedniyPapa"}
-local win = {"CandyEyePlayer"}
-if game.PlaceId ==  45146873 then    
+local win = {"CandyEyePlayer","kirilldk20"}
+if game.PlaceId ==  45146873 then
+	local found = function(t)
+    for _,v in pairs(t) do
+        if game.Players:FindFirstChild(v) then return true end
+    end
+    return false
+	end
     repeat
     wait(1)
-    until game:IsLoaded() and game.Players:FindFirstChild(win[1])
+    until game:IsLoaded() and found(win) and found(lose)
 	print("Loaded")
 
     local join =  function(i)
