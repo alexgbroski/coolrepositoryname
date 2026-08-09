@@ -50,8 +50,8 @@ if game.PlaceId ==  45146873 then
 	        end
 	    end
 	end end
-    local F  =  gui[1]
-    local S = gui[2]
+    local F  =  gui:WaitForChild("1")
+    local S = gui:WaitForChild("2")
     local plr = game.Players.LocalPlayer
 	print(gui.Name.." Success launched, waiting for...")
     if table.find(win,plr.Name) then
