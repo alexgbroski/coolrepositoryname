@@ -51,7 +51,7 @@ if game.PlaceId ==  45146873 then
     end
 elseif game.PlaceId  == 46955756 then--49707852 then
     repeat
-    wait(1)
+    wait(3)
     until game:IsLoaded()
     print("Loaded")
     local ui = workspace
