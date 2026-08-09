@@ -10,7 +10,7 @@ if game.PlaceId ==  45146873 then
         local Event = workspace.Enter
         Event:InvokeServer(
             "1v1",
-            2
+            i
         )
         print("Joined")
     end
@@ -43,7 +43,6 @@ if game.PlaceId ==  45146873 then
             if F and S then
                 if (F.Text == "" and S.Text ==  "") or (table.find(win,F.Text) or table.find(win,S.Text)) then
                     join(2)
-                                   join(2)
                     game:GetService("Players").LocalPlayer.PlayerGui.Games.Games.Buttons.Games["1v1_Confirm"].Visible =  true
                     game.Workspace:FindFirstChild("BeginGame"):InvokeServer("1v1", 2)
                 end
@@ -96,7 +95,7 @@ elseif game.PlaceId  == 46955756 then--49707852 then
     local plr = game.Players.LocalPlayer
 
     if table.find(win,plr.Name) then
-       while wait(0.1) do
+       while wait(10) do
 			game.Workspace.BuyZombie:InvokeServer("Speedy")
 			local Event = workspace.Make
 			Event:InvokeServer(
