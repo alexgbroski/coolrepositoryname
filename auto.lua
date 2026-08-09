@@ -3,7 +3,7 @@ local win = {"CandyEyePlayer"}
 if game.PlaceId ==  45146873 then    
     repeat
     wait(1)
-    until game:IsLoaded() and game:GetService("Players").LocalPlayer.PlayerGui.Games.Games.Buttons.Games["1v1"]
+    until game:IsLoaded()
 	print("Loaded")
 
     local join =  function(i)
@@ -16,7 +16,7 @@ if game.PlaceId ==  45146873 then
     end
 
     
-    local gui = game:GetService("Players").LocalPlayer.PlayerGui.Games.Games.Buttons.Games["1v1"]
+    local gui = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Games")::WaitForChild("Games"):WaitForChild("Buttons"):WaitForChild("Games"):WaitForChild("1v1:)
     local F  =  gui[1]
     local S = gui[2]
     local plr = game.Players.LocalPlayer
