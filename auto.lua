@@ -53,7 +53,7 @@ if game.PlaceId ==  45146873 then
     local F  =  gui[1]
     local S = gui[2]
     local plr = game.Players.LocalPlayer
-	print("Success launched, waiting for..")
+	print("Success launched, waiting for...")
     if table.find(win,plr.Name) then
     	repeat
 	game.Workspace.Loser:InvokeServer()
