@@ -3,8 +3,8 @@ local win = {"CandyEyePlayer"}
 if game.PlaceId ==  45146873 then    
     repeat
     wait(1)
-    until game:IsLoaded()
-    print("Loaded")
+    until game:IsLoaded() and game:GetService("Players").LocalPlayer.PlayerGui.Games.Games.Buttons.Games["1v1"]
+	print("Loaded")
 
     local join =  function(i)
         local Event = workspace.Enter
