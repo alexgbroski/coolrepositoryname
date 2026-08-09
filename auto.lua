@@ -4,7 +4,7 @@ if game.PlaceId ==  45146873 then
     repeat
     wait(1)
     until game:IsLoaded()
-    
+    print("Loaded")
 
     local join =  function(i)
         local Event = workspace.Enter
