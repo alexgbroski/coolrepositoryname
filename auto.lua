@@ -97,6 +97,7 @@ elseif game.PlaceId  == 46955756 then--49707852 then
 
     if table.find(win,plr.Name) then
        while wait(0.1) do
+			game.Workspace.BuyZombie:InvokeServer("Speedy")
 			local Event = workspace.Make
 			Event:InvokeServer(
 			    "Speedy"
