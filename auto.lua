@@ -23,6 +23,7 @@ if game.PlaceId ==  45146873 then
 
     
     local gui = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Games"):WaitForChild("Games"):WaitForChild("Buttons"):WaitForChild("Games"):WaitForChild("1v1")
+	if not gui then return end
     local F  =  gui[1]
     local S = gui[2]
     local plr = game.Players.LocalPlayer
@@ -34,6 +35,7 @@ if game.PlaceId ==  45146873 then
     		wait(0.1)
             if F and S then
                 if (F.Text == "" and S.Text ==  "") or (table.find(lose,F.Text) or table.find(lose,S.Text)) then
+					print("Trying")
                     join(2)
                     game:GetService("Players").LocalPlayer.PlayerGui.Games.Games.Buttons.Games["1v1_Confirm"].Visible =  true
                     game.Workspace:FindFirstChild("BeginGame"):InvokeServer("1v1", 2)
@@ -48,6 +50,7 @@ if game.PlaceId ==  45146873 then
     		wait(0.1)
             if F and S then
                 if (F.Text == "" and S.Text ==  "") or (table.find(win,F.Text) or table.find(win,S.Text)) then
+					print("Trying")
                     join(2)
                     game:GetService("Players").LocalPlayer.PlayerGui.Games.Games.Buttons.Games["1v1_Confirm"].Visible =  true
                     game.Workspace:FindFirstChild("BeginGame"):InvokeServer("1v1", 2)
