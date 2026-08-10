@@ -9,7 +9,7 @@ if game.PlaceId ==  45146873 then
 	end
     repeat
     wait(5)
-    until game:IsLoaded() and found(win) and found(lose)
+    until game:IsLoaded() and found(win) and found(lose) and game.Players.LocalPlayer and game.Players.LocalPlayer.PlayerGui:WaitForChild("Games")
 	print("Loaded")
 
     local join =  function(i)
