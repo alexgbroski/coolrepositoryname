@@ -1,4 +1,4 @@
-task.wait(1)
+task.wait(5)
 local g, p, t = game:GetService("GuiService"), game:GetService("Players").LocalPlayer, game:GetService("TeleportService")
 g.ErrorMessageChanged:Connect(function(e) if e and e ~= "" then task.wait(); t:Teleport(45146873, p) end end)
 local plr=game.Players.LocalPlayer
