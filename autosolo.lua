@@ -23,11 +23,11 @@ if game.PlaceId==45146873 then
     if workspace.SurvivalAnalysis then workspace.SurvivalAnalysis:InvokeServer() end
     print("Solo Success launched, waiting for...")
     repeat
-        task.wait(0.1)
-        join(1)
         if workspace.Loser then workspace.Loser:InvokeServer() end
         if workspace.Winner then workspace.Winner:InvokeServer() end
         if workspace.SurvivalAnalysis then workspace.SurvivalAnalysis:InvokeServer() end
+        task.wait(0.1)
+        join(1)
     until inGame and inGame.Value==true
 elseif game.PlaceId==49707852 then
     repeat task.wait(3) until game:IsLoaded()
