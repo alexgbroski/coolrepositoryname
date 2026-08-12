@@ -9,7 +9,7 @@ if game.PlaceId==45146873 then
             inGame=plr.Information:FindFirstChild("inGame")
         end
         task.wait()
-    until game.Loaded and plr and plr.PlayerGui and inGame
+    until game.Loaded and plr and plr.PlayerGui and inGame and workspace:FindFirstChild("SurvivalAnalysis")
     print("Loaded")
     local join=function(i)
         local Event=workspace.Enter
